@@ -75,8 +75,9 @@ int API(){
     get_filepath(img_name, img_cnt);
 
     while(count>0){
+        start = clock();
         while(access(img_name, F_OK)==0){
-            if(img_cnt > prev_cnt + IMG_TERM){
+            if(img_cnt >= prev_cnt + IMG_TERM){
                 get_filepath(prev_path, prev_cnt);
                 remove(prev_path);
                 std::cout<<"file "<<prev_path<<" has deleted."<<endl;
@@ -102,30 +103,26 @@ int API(){
 
         if(in.good() == true){
             prev_cnt = img_cnt;
-            count--;
-            start = clock();
-            std::cout<<"\033[2J";
+            //count--;
+            //std::cout<<"\033[2J";
             OCR_.detect_text(result_ocr, MAX_STR, img_name, "ocr");
-            std::cout<<"# Detected text"<<std::endl;
-            std::cout<<result_ocr<<std::endl;
+            //std::cout<<"# Detected text"<<std::endl;
+            //std::cout<<result_ocr<<std::endl;
 
             numsv = 0;
             TR.translate(result_translation, MAX_STR, (const char*)result_ocr, psv, &numsv);
-            std::cout<<"# Translated text"<<std::endl;
+            //std::cout<<"# Translated text"<<std::endl;
             //std::cout<<result_translation<<std::endl;
 
-            for(int i = 0; i <numsv ; i++)
-	            printf("%s %d %d %d %d\n", psv[i].str, psv[i].x1,  psv[i].y1, psv[i].x2, psv[i].y2);
+            //for(int i = 0; i <numsv ; i++)
+	            //printf("%s %d %d %d %d\n", psv[i].str, psv[i].x1,  psv[i].y1, psv[i].x2, psv[i].y2);
 
             sendMsg(psv, numsv);
-                
-            end = clock();
 
-            std::cout<<"delay : "<<(1000.0)*(double)(end-start)/CLOCKS_PER_SEC<<endl;
-            std::cout<<"frame "<<count<<endl;
+            //std::cout<<"frame "<<count<<endl;
 
             //sleep(3.0-(1.0)*(double)(end-start)/CLOCKS_PER_SEC);
-            if(count == 0){
+            /*if(count == 0){
                 std::cout<<"count is 0. C to continue, E to exit : ";
                 std::cin>>continues;
                 if(continues == 'c' || continues == 'C'){
@@ -135,9 +132,13 @@ int API(){
                     in.close();
                     break;
                 }
-            }
+            }*/
         }
         in.close();
+
+        end = clock();
+
+        std::cout<<"delay : "<<(clock_t)(1000)*(end-start)/CLOCKS_PER_SEC<<endl;
     }
     return 0;
 }

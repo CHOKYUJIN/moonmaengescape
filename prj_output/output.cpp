@@ -88,8 +88,8 @@ static gboolean draw(GtkWidget *window, cairo_t *cr, gpointer userdata)
     //  merge all 사용시 이 부분 사용.
     if(numsv > 0) {
         //printf("numsv : %d\n", numsv);
-        printf("y1 : %d , y2 : %d\n", s_ptr[0].y1, s_ptr[0].y2);
-        printf("font size : %d\n", (s_ptr[0].y2 - s_ptr[0].y1));
+        //printf("y1 : %d , y2 : %d\n", s_ptr[0].y1, s_ptr[0].y2);
+        //printf("font size : %d\n", (s_ptr[0].y2 - s_ptr[0].y1));
         int check_length = numsv > pre_num ? numsv : pre_num;
         for(int i = 0; i < check_length; i++) {
                 // 새로 변경된 텍스트 갱신
@@ -102,7 +102,7 @@ static gboolean draw(GtkWidget *window, cairo_t *cr, gpointer userdata)
                 strcat(str_tmp, "\" font=\"");
 
                 sprintf(font_size, "%d", (int)((double)((s_ptr[i].y2 - s_ptr[i].y1)) * 0.9));
-                printf("%s\n", font_size);
+                //printf("%s\n", font_size);
                 strcat(str_tmp, font_size);
                 strcat(str_tmp, "\"><b>");
                 strcat(str_tmp, s_ptr[i].str);
